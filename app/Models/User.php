@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use App\Models\User;
+
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,HasRoles  ,  HasRoles    ;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +25,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
+        'usertype',
         'password',
+        'google_id',
+        // 'status'
     ];
 
     /**
@@ -40,32 +50,38 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+
+        'roles_name' => 'array',
     ];
 
 
     protected $guarded = ['id'];
 
-    public function questions()
+
+
+    public function orders()
     {
-        return $this->hasMany(questions::class);
+        return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 
 
-    public function Report()
-    {
-        return $this->hasMany(reports::class);
-    }
+    public function carts()
+{
+    return $this->hasMany(Cart::class);
+}
 
 
-    public function supplies()
-    {
-        return $this->hasMany(Supplies::class);
-    }
 
-    public function doctors()
-    {
-        return $this->hasMany(Doctoers::class);
-    }
 
 
 }

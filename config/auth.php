@@ -1,5 +1,10 @@
 <?php
 
+// use App\Models\Admin;
+use App\Models\User;
+
+use App\Models\Admin;
+
 return [
 
     /*
@@ -40,6 +45,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -65,10 +75,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'database',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*

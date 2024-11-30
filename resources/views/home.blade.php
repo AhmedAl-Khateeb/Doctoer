@@ -1,9 +1,10 @@
-@extends('layouts.master')
+
+@extends('admin.include.master')
 @section('css')
 <!--  Owl-carousel css-->
-<link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet" />
+<link href="{{asset('admin/assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet" />
 <!-- Maps css -->
-<link href="{{URL::asset('assets/plugins/jqvmap/jqvmap.min.css')}}" rel="stylesheet">
+<link href="{{asset('admin/assets/plugins/jqvmap/jqvmap.min.css')}}" rel="stylesheet">
 @endsection
 @section('page-header')
 				<!-- breadcrumb -->
@@ -11,124 +12,190 @@
 					<div class="left-content">
 						<div>
 						  <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-						  <p class="mg-b-0">Sales monitoring dashboard template.</p>
+						  <p class="mg-b-0">Admin page</p>
 						</div>
 					</div>
 					<div class="main-dashboard-header-right">
 						<div>
-							<label class="tx-13">Customer Ratings</label>
+							{{-- <label class="tx-13">Customer Ratings</label> --}}
 							<div class="main-star">
-								<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span>(14,873)</span>
+								{{-- <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span>(14,873)</span> --}}
 							</div>
 						</div>
 						<div>
-							<label class="tx-13">Online Sales</label>
-							<h5>563,275</h5>
+							{{-- <label class="tx-13">Online Sales</label> --}}
+							{{-- <h5>563,275</h5> --}}
 						</div>
 						<div>
-							<label class="tx-13">Offline Sales</label>
-							<h5>783,675</h5>
+							{{-- <label class="tx-13">Oظffline Sales</label> --}}
+							{{-- <h5>783,675</h5> --}}
 						</div>
 					</div>
 				</div>
-				<!-- /breadcrumb -->
 @endsection
 @section('content')
-				<!-- row -->
 				<div class="row row-sm">
+
 					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
-						<div class="card overflow-hidden sales-card bg-primary-gradient">
+						<div class="card overflow-hidden sales-card bg-success-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
-								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TODAY ORDERS</h6>
-								</div>
+								<div class="text-center">
+									<h3 class=" text-blak text-center">Total Categories</h3>
+								</div><br>
 								<div class="pb-0 mt-0">
-									<div class="d-flex">
-										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$5,74.12</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
-										</div>
-										<span class="float-right my-auto mr-auto">
-											<i class="fas fa-arrow-circle-up text-white"></i>
-											<span class="text-white op-7"> +427</span>
+									<div class="d-flex justify-content-between align-items-center">
+										<span class=" text-center ">
+											<h1 class="text-white text-center"> {{App\Models\Category::count()}}</h1>
 										</span>
+                                        <a href="{{ route('category.index') }}" class="text-white op-7">View-all</a>
 									</div>
 								</div>
 							</div>
-							<span id="compositeline" class="pt-1">5,9,5,6,4,12,18,14,10,15,12,5,8,5,12,5,12,10,16,12</span>
 						</div>
 					</div>
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+                        <div class="card overflow-hidden sales-card bg-primary-gradient">
+                            <div class="pl-3 pt-3 pr-3 pb-2 pt-0">
+                                <div class="text-center">
+                                    <h3 class="text-black">Total Products</h3>
+                                </div><br>
+                                <div class="pb-0 mt-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-center">
+                                            <h1 class="text-white op-7">{{ App\Models\Product::count() }}</h1>
+                                        </span>
+                                        <a href="{{ route('products.index') }}" class="text-white op-7">View-all</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
 						<div class="card overflow-hidden sales-card bg-danger-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TODAY EARNINGS</h6>
-								</div>
+									<h3 class=" text-blak text-center">Total Orders</h3>
+								</div><br>
 								<div class="pb-0 mt-0">
-									<div class="d-flex">
-										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$1,230.17</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
-										</div>
-										<span class="float-right my-auto mr-auto">
-											<i class="fas fa-arrow-circle-down text-white"></i>
-											<span class="text-white op-7"> -23.09%</span>
+									<div class="d-flex justify-content-between align-items-center">
+										<span class="text-center">
+											<h1 class="text-white op-7"> {{ App\Models\Order::count()}} </h1>
 										</span>
+                                        <a href="{{ route('order.showall') }}" class="text-white op-7 text-gray">View-all</a>
 									</div>
 								</div>
 							</div>
-							<span id="compositeline2" class="pt-1">3,2,4,6,12,14,8,7,14,16,12,7,8,4,3,2,2,5,6,7</span>
 						</div>
 					</div>
+
+
 					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
 						<div class="card overflow-hidden sales-card bg-success-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TOTAL EARNINGS</h6>
-								</div>
+                                    <h3 class="text-black text-center"> Total Revenue</h3>
+								</div><br>
 								<div class="pb-0 mt-0">
-									<div class="d-flex">
-										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$7,125.70</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
-										</div>
-										<span class="float-right my-auto mr-auto">
-											<i class="fas fa-arrow-circle-up text-white"></i>
-											<span class="text-white op-7"> 52.09%</span>
-										</span>
+									<div class="">
+										<span class="text-center">
+                                            @isset($total_revenue)
+                                            <h3 class="text-center">إجمالي الإيرادات: {{ number_format($total_revenue, 2) }} </h3>
+                                        @endisset
+                                        </span>
 									</div>
 								</div>
 							</div>
-							<span id="compositeline3" class="pt-1">5,10,5,20,22,12,15,18,20,15,8,12,22,5,10,12,22,15,16,10</span>
 						</div>
 					</div>
-					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
-						<div class="card overflow-hidden sales-card bg-warning-gradient">
+
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden sales-card bg-success-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">PRODUCT SOLD</h6>
-								</div>
+									<h3 class=" text-blak text-center">Orders Delivered </h3>
+								</div><br>
 								<div class="pb-0 mt-0">
-									<div class="d-flex">
-										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$4,820.50</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
-										</div>
-										<span class="float-right my-auto mr-auto">
-											<i class="fas fa-arrow-circle-down text-white"></i>
-											<span class="text-white op-7"> -152.3</span>
+									<div class="">
+										<span class="text-center">
+                                            @isset($total_delivered)
+                                            <h3 class="text-center">عدد الطلبات المكتملة: {{ $total_delivered }}</h3>
+                                            @endisset
+                                        </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden sales-card bg-danger-gradient">
+							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
+								<div class="">
+									<h3 class=" text-blak text-center">Orders Processing</h3>
+								</div><br>
+								<div class="pb-0 mt-0">
+									<div class="">
+										<span class="text-center">
+                                            @isset( $total_processing )
+                                            <h3 class="text-center">عدد الطلبات المنتظرة: {{ $total_processing }}</h3>
+
+                                            @endisset
+                                        </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden sales-card bg-success-gradient">
+							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
+								<div class="">
+									<h3 class=" text-blak text-center">Total-Customers</h3>
+								</div><br>
+								<div class="pb-0 mt-0">
+									<div class="">
+										<span class="text-center">
+                                            <h1 class=" text-white op-7">{{ App\Models\User::count() }}</h1>
 										</span>
 									</div>
 								</div>
 							</div>
-							<span id="compositeline4" class="pt-1">5,9,5,6,4,12,18,14,10,15,12,5,8,5,12,5,12,10,16,12</span>
 						</div>
 					</div>
-				</div>
-				<!-- row closed -->
 
-				<!-- row opened -->
-				<div class="row row-sm">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden sales-card bg-danger-gradient">
+							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
+								<div class="">
+									<h3 class=" text-blak text-center">Total Messages</h3>
+								</div><br>
+								<div class="pb-0 mt-0">
+									<div class="d-flex justify-content-between align-items-center">
+										<span class="text-center">
+											<h1 class="text-white op-7 text-dark"> {{ App\Models\ContactUs::count()}} </h1>
+										</span>
+                                        <a href="{{ route('contact.index') }}" class="text-white op-7 text-gray">View-all</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+
+				{{-- <div class="row row-sm">
 					<div class="col-md-12 col-lg-12 col-xl-7">
 						<div class="card">
 							<div class="card-header bg-transparent pd-b-0 pd-t-20 bd-b-0">
@@ -166,11 +233,10 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- row closed -->
+				</div> --}}
 
-				<!-- row opened -->
-				<div class="row row-sm">
+
+				{{-- <div class="row row-sm">
 					<div class="col-xl-4 col-md-12 col-lg-12">
 						<div class="card">
 							<div class="card-header pb-1">
@@ -181,7 +247,7 @@
 								<div class="list-group list-lg-group list-group-flush">
 									<div class="list-group-item list-group-item-action" href="#">
 										<div class="media mt-0">
-											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{URL::asset('assets/img/faces/3.jpg')}}" alt="Image description">
+											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{asset('admin/assets/img/faces/3.jpg')}}" alt="Image description">
 											<div class="media-body">
 												<div class="d-flex align-items-center">
 													<div class="mt-0">
@@ -197,7 +263,7 @@
 									</div>
 									<div class="list-group-item list-group-item-action" href="#">
 										<div class="media mt-0">
-											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{URL::asset('assets/img/faces/11.jpg')}}" alt="Image description">
+											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{asset('admin/assets/img/faces/11.jpg')}}" alt="Image description">
 											<div class="media-body">
 												<div class="d-flex align-items-center">
 													<div class="mt-1">
@@ -213,7 +279,7 @@
 									</div>
 									<div class="list-group-item list-group-item-action" href="#">
 										<div class="media mt-0">
-											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{URL::asset('assets/img/faces/17.jpg')}}" alt="Image description">
+											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{asset('admin/assets/img/faces/17.jpg')}}" alt="Image description">
 											<div class="media-body">
 												<div class="d-flex align-items-center">
 													<div class="mt-1">
@@ -229,7 +295,7 @@
 									</div>
 									<div class="list-group-item list-group-item-action" href="#">
 										<div class="media mt-0">
-											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{URL::asset('assets/img/faces/15.jpg')}}" alt="Image description">
+											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{asset('admin/assets/img/faces/15.jpg')}}" alt="Image description">
 											<div class="media-body">
 												<div class="d-flex align-items-center">
 													<div class="mt-1">
@@ -245,7 +311,7 @@
 									</div>
 									<div class="list-group-item list-group-item-action br-br-7 br-bl-7" href="#">
 										<div class="media mt-0">
-											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{URL::asset('assets/img/faces/6.jpg')}}" alt="Image description">
+											<img class="avatar-lg rounded-circle ml-3 my-auto" src="{{asset('admin/assets/img/faces/6.jpg')}}" alt="Image description">
 											<div class="media-body">
 												<div class="d-flex align-items-center">
 													<div class="mt-1">
@@ -344,11 +410,9 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- row close -->
+				</div> --}}
 
-				<!-- row opened -->
-				<div class="row row-sm row-deck">
+				{{-- <div class="row row-sm row-deck">
 					<div class="col-md-12 col-lg-4 col-xl-4">
 						<div class="card card-dashboard-eight pb-2">
 							<h6 class="card-title">Your Top Countries</h6><span class="d-block mg-b-10 text-muted tx-12">Sales performance revenue based by country</span>
@@ -433,31 +497,24 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- /row -->
+				</div> --}}
 			</div>
 		</div>
-		<!-- Container closed -->
 @endsection
 @section('js')
-<!--Internal  Chart.bundle js -->
-<script src="{{URL::asset('assets/plugins/chart.js/Chart.bundle.min.js')}}"></script>
-<!-- Moment js -->
-<script src="{{URL::asset('assets/plugins/raphael/raphael.min.js')}}"></script>
-<!--Internal  Flot js-->
-<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.pie.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.resize.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.categories.js')}}"></script>
-<script src="{{URL::asset('assets/js/dashboard.sampledata.js')}}"></script>
-<script src="{{URL::asset('assets/js/chart.flot.sampledata.js')}}"></script>
-<!--Internal Apexchart js-->
-<script src="{{URL::asset('assets/js/apexcharts.js')}}"></script>
-<!-- Internal Map -->
-<script src="{{URL::asset('assets/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-<script src="{{URL::asset('assets/js/modal-popup.js')}}"></script>
-<!--Internal  index js -->
-<script src="{{URL::asset('assets/js/index.js')}}"></script>
-<script src="{{URL::asset('assets/js/jquery.vmap.sampledata.js')}}"></script>
+
+<script src="{{asset('admin/assets/plugins/chart.js/Chart.bundle.min.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/raphael/raphael.min.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jquery.flot/jquery.flot.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jquery.flot/jquery.flot.pie.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jquery.flot/jquery.flot.resize.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jquery.flot/jquery.flot.categories.js')}}"></script>
+<script src="{{asset('admin/assets/js/dashboard.sampledata.js')}}"></script>
+<script src="{{asset('admin/assets/js/chart.flot.sampledata.js')}}"></script>
+<script src="{{asset('admin/assets/js/apexcharts.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+<script src="{{asset('admin/assets/js/modal-popup.js')}}"></script>
+<script src="{{asset('admin/assets/js/index.js')}}"></script>
+<script src="{{asset('admin/assets/js/jquery.vmap.sampledata.js')}}"></script>
 @endsection

@@ -2,47 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($id)
+
+    public function index()
     {
-        if(view()->exists($id)){
-            return view($id);
-        }
-        else
-        {
-            return view('404');
+        $total_revenue = 0;
+        $total_delivered = 0;
+        $total_processing = 0;
+
+        $orders = Order::all();
+        foreach ($orders as $order) {
+            $total_revenue += $order->price;
         }
 
-     //   return view($id);
+        $total_delivered = Order::where('delivery_status', 'Delivered')->count();
+        $total_processing = Order::where('delivery_status', 'processing')->count();
+
+        return view('home', compact('total_revenue', 'total_delivered', 'total_processing'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function login(Request $request)
     {
-        //
-    }
+        $credentials = $request->only('email', 'password');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->route('admin.auth.login')->with('error', 'Invalid credentials');
     }
 
     /**

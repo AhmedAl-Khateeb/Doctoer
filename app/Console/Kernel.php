@@ -15,8 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // جدولة الأمر ليعمل مرة واحدة في اليوم
+        $schedule->command('notifications:delete-old')->daily();
     }
+
 
     /**
      * Register the commands for the application.

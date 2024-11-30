@@ -1,90 +1,116 @@
 @extends('layouts.master')
 @section('css')
-    <!--- Internal Select2 css-->
-    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
-    <!---Internal Fileupload css-->
-    <link href="{{ URL::asset('assets/plugins/fileuploads/css/fileupload.css') }}" rel="stylesheet" type="text/css" />
-    <!---Internal Fancy uploader css-->
-    <link href="{{ URL::asset('assets/plugins/fancyuploder/fancy_fileupload.css') }}" rel="stylesheet" />
-    <!--Internal Sumoselect css-->
-    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css') }}">
-    <!--Internal  TelephoneInput css-->
-    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
-@endsection
+<!-- Internal Nice-select css  -->
+<link href="{{URL::asset('assets/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet" />
 @section('title')
-    Add-User
+اضافة مستخدم - مورا سوفت للادارة القانونية
 @stop
+
+
+@endsection
 @section('page-header')
-				<!-- breadcrumb -->
-				<div class="breadcrumb-header justify-content-between">
-					<div class="my-auto">
-						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">Users</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ All-Users</span>
-						</div>
-					</div>
-				</div>
-				<!-- breadcrumb -->
+<!-- breadcrumb -->
+<div class="breadcrumb-header justify-content-between">
+    <div class="my-auto">
+        <div class="d-flex">
+            <h4 class="content-title mb-0 my-auto">المستخدمين</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة
+                مستخدم</span>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb -->
 @endsection
 @section('content')
+<!-- row -->
+<div class="row">
 
 
-  <!-- row -->
+    <div class="col-lg-12 col-md-12">
 
-
-
-
-
-
-    <main id="main" class="main">
-        <section class="section">
-            <div class="container">
-          <div class="row">
-            <div class="col-md-8 col-12 mb-2">
-              <div class="card">
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
-                        @csrf
-        <div class="form-group">
-
-                <label for="inputName" class="control-label">Name</label>
-                <input type="text" class="form-control"  name="name">
-
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>خطا</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+        @endif
 
-            <div class="form-group">
-                <label>Email</label>
-                <input class="form-control" name="email" type="email" >
+        <div class="card">
+            <div class="card-body">
+                <div class="col-lg-12 margin-tb">
+                    <div class="pull-right">
+                        <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}">رجوع</a>
+                    </div>
+                </div><br>
+                <form class="parsley-style-1" id="selectForm2" autocomplete="off" name="selectForm2"
+                    action="{{route('users.store','test')}}" method="post">
+                    {{csrf_field()}}
+
+                    <div class="">
+
+                        <div class="row mg-b-20">
+                            <div class="parsley-input col-md-6" id="fnWrapper">
+                                <label>اسم المستخدم: <span class="tx-danger">*</span></label>
+                                <input class="form-control form-control-sm mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" name="name" required="" type="text">
+                            </div>
+
+                            <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label>البريد الالكتروني: <span class="tx-danger">*</span></label>
+                                <input class="form-control form-control-sm mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" name="email" required="" type="email">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mg-b-20">
+                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                            <label>كلمة المرور: <span class="tx-danger">*</span></label>
+                            <input class="form-control form-control-sm mg-b-20" data-parsley-class-handler="#lnWrapper"
+                                name="password" required="" type="password">
+                        </div>
+
+                        <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                            <label> تاكيد كلمة المرور: <span class="tx-danger">*</span></label>
+                            <input class="form-control form-control-sm mg-b-20" data-parsley-class-handler="#lnWrapper"
+                                name="confirm-password" required="" type="password">
+                        </div>
+                    </div>
+
+                    <div class="row row-sm mg-b-20">
+                        <div class="col-lg-6">
+                            <label class="form-label">حالة المستخدم</label>
+                            <select name="Status" id="select-beast" class="form-control  nice-select  custom-select">
+                                <option value="مفعل">مفعل</option>
+                                <option value="غير مفعل">غير مفعل</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-b-20">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="form-group">
+                                <label class="form-label"> صلاحية المستخدم</label>
+                                {!! Form::select('roles_name[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <button class="btn btn-main-primary pd-x-20" type="submit">تاكيد</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="form-group my-2">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
-            </div>
-
-
-            <div class="form-group my-2">
-                <input type="radio" name="status" value="doctor"> Doctor
-
-                <br>
-                <input type="radio" name="status"  value="patient"> Patient
-            </div>
-        {{-- </div> --}}
-
-        <div class="d-grid my-3">
-            <button type="submit" class="btn btn-info">Create</button>
         </div>
-
-
-      </form><!-- End General Form Elements -->
-              </div>
-            </div>
-          </div>
-            </div>
-        </section>
-    </main>
-
-  </div>
-  <!-- row closed -->
+    </div>
+</div>
+<!-- row closed -->
 </div>
 <!-- Container closed -->
 </div>
@@ -92,29 +118,13 @@
 @endsection
 @section('js')
 
-    <!-- Internal Select2 js-->
-    <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
-    <!--Internal Fileuploads js-->
-    <script src="{{ URL::asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/fileuploads/js/file-upload.js') }}"></script>
-    <!--Internal Fancy uploader js-->
-    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.ui.widget.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.fileupload.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.iframe-transport.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.fancy-fileupload.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/fancyuploder/fancy-uploader.js') }}"></script>
-    <!--Internal  Form-elements js-->
-    <script src="{{ URL::asset('assets/js/advanced-form-elements.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/select2.js') }}"></script>
-    <!--Internal Sumoselect js-->
-    <script src="{{ URL::asset('assets/plugins/sumoselect/jquery.sumoselect.js') }}"></script>
-    <!--Internal  Datepicker js -->
-    <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
-    <!--Internal  jquery.maskedinput js -->
-    <script src="{{ URL::asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.js') }}"></script>
-    <!--Internal  spectrum-colorpicker js -->
-    <script src="{{ URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js') }}"></script>
-    <!-- Internal form-elements js -->
-    <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
 
+<!-- Internal Nice-select js-->
+<script src="{{URL::asset('assets/plugins/jquery-nice-select/js/jquery.nice-select.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/jquery-nice-select/js/nice-select.js')}}"></script>
+
+<!--Internal  Parsley.min js -->
+<script src="{{URL::asset('assets/plugins/parsleyjs/parsley.min.js')}}"></script>
+<!-- Internal Form-validation js -->
+<script src="{{URL::asset('assets/js/form-validation.js')}}"></script>
 @endsection

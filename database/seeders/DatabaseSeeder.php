@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use RolesAndPermissionsSeeder;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +13,14 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
+    // public function run()
+    // {
         // \App\Models\User::factory(10)->create();
-    }
+    // }
+
+    public function run()
+{
+    $this->call(RolesAndPermissionsSeeder::class);
+}
+
 }
